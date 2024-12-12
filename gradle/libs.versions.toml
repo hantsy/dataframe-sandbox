@@ -1,0 +1,52 @@
+[versions]
+testLogger = "4.0.0"
+kspGradlePlugin = "2.1.0-1.0.29"
+kotlin = "2.1.0"
+kotlinCoroutines = "1.9.0"
+kotlinDataFrame = "0.15.0"
+kotest = "5.9.1"
+mockk = "1.13.13"
+springmockk = "4.0.2"
+jackson = "2.18.2"
+logback = "1.5.12"
+
+[libraries]
+# Kotlin Extensions
+jacksonKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
+kotlinStdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib" }
+kotlinCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
+kotlinCoroutinesCoreJvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "kotlinCoroutines" }
+kotlinCoroutinesJdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinCoroutines" }
+kotlinCoroutinesReactive = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive", version.ref = "kotlinCoroutines" }
+kotlinCoroutinesReactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "kotlinCoroutines" }
+
+# Kotlin Dataframe
+kotlinDataframeCore = { module = "org.jetbrains.kotlinx:dataframe-core", version.ref = "kotlinDataFrame" }
+kotlinDataframeExcel = { module = "org.jetbrains.kotlinx:dataframe-excel", version.ref = "kotlinDataFrame" }
+kotlinDataframeCsv = { module = "org.jetbrains.kotlinx:dataframe-csv", version.ref = "kotlinDataFrame" }
+
+# Kotlin Coroutines Test
+kotlinCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
+
+# Kotest Assertions
+kotestAssertionsCoreJvm = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
+
+# Mockk
+mockk = { module = "io.mockk:mockk-jvm", version.ref = "mockk" }
+springmockk = { module = "com.ninja-squad:springmockk", version.ref = "springmockk" }
+
+#logback
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+[bundles]
+kotlinSupport = ["jacksonKotlin", "kotlinReflect", "kotlinStdlib", "kotlinCoroutinesCore",
+    "kotlinCoroutinesCoreJvm", "kotlinCoroutinesJdk8", "kotlinCoroutinesReactive", "kotlinCoroutinesReactor",
+    "kotlinDataframeCore", "kotlinDataframeExcel", "kotlinDataframeCsv"]
+kotest = ["kotestAssertionsCoreJvm"]
+mockk = ["mockk", "springmockk"]
+
+[plugins]
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+testLogger = { id = "com.adarshr.test-logger", version.ref = "testLogger" }
+dataframe = { id = "org.jetbrains.kotlinx.dataframe", version.ref = "kotlinDataFrame" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "kspGradlePlugin" }
