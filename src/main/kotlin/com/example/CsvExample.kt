@@ -14,10 +14,10 @@ import java.math.BigDecimal
 fun main() {
     println("Hello World!")
     val dataFrame = DataFrame
-        .readCsv(DataSchemaExample::class.java.getResourceAsStream("/sample.csv")!!)
+        .readCsv(CsvExampleDataModel::class.java.getResourceAsStream("/sample.csv")!!)
     dataFrame.schema().print()
     val result = dataFrame
-        .convertTo<DataSchemaExample> {
+        .convertTo<CsvExampleDataModel> {
             // freely convert
             parser { ACHType.fromSymbol(it) }
             parser { BigDecimal(it) }
@@ -37,7 +37,7 @@ enum class ACHType(val symbol: String) {
 }
 
 @DataSchema
-data class DataSchemaExample(
+data class CsvExampleDataModel(
     @ColumnName("Amount")
     val amount: BigDecimal? = null,
     @ColumnName("Last 4")
