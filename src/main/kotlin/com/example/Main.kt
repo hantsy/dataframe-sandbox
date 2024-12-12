@@ -1,4 +1,4 @@
-package org.example
+package com.example
 
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.annotations.ColumnName
@@ -32,7 +32,7 @@ enum class ACHType(val symbol: String) {
     REAL_TIME("R"); // real time
 
     companion object {
-        fun fromSymbol(symbol: String): ACHType = ACHType.values().first { it.symbol == symbol }
+        fun fromSymbol(symbol: String): ACHType = ACHType.entries.first { it.symbol == symbol }
     }
 }
 
