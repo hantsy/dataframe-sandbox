@@ -18,7 +18,8 @@ fun main() {
     val dataFrame = DataFrame
         .readCsv(
             inputStream = CsvExampleDataModel::class.java.getResourceAsStream("/sample.csv")!!,
-            // https://github.com/Kotlin/dataframe/issues/998
+            // see: https://github.com/Kotlin/dataframe/issues/998
+            // and https://gist.github.com/Jolanrensen/863ae0144d9ed6309a0c11bab3d8ae9c
             parserOptions = ParserOptions(skipTypes = setOf(typeOf<Char>()))
         )
     dataFrame.schema().print()
