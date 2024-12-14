@@ -8,8 +8,10 @@ import org.jetbrains.kotlinx.dataframe.api.convertTo
 import org.jetbrains.kotlinx.dataframe.api.parser
 import org.jetbrains.kotlinx.dataframe.api.print
 import org.jetbrains.kotlinx.dataframe.api.schema
+import org.jetbrains.kotlinx.dataframe.api.toDataFrame
 import org.jetbrains.kotlinx.dataframe.api.toList
 import org.jetbrains.kotlinx.dataframe.io.readCsv
+import org.jetbrains.kotlinx.dataframe.io.toCsv
 import java.math.BigDecimal
 import kotlin.reflect.typeOf
 
@@ -27,10 +29,16 @@ fun main() {
         .convertTo<CsvExampleDataModel> {
             // freely convert
             parser { ACHType.fromSymbol(it) }
-            parser { BigDecimal(it) }
+            // parser { BigDecimal(it) }
         }
         .toList()
     println("converted result:$result")
+
+    val exportedCsv = listOf(
+        CsvExampleDataModel(BigDecimal("10.2"), "1234", ACHType.SAME_DAY),
+        CsvExampleDataModel(BigDecimal("11.20"), "4567", ACHType.NEXT_DAY)
+    ).toDataFrame().toCsv()
+    println("expected csv: $exportedCsv")
 }
 
 enum class ACHType(val symbol: String) {
