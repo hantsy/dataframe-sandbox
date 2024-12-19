@@ -7,6 +7,7 @@ import org.jetbrains.kotlinx.dataframe.api.ParserOptions
 import org.jetbrains.kotlinx.dataframe.api.convertTo
 import org.jetbrains.kotlinx.dataframe.api.parser
 import org.jetbrains.kotlinx.dataframe.api.print
+import org.jetbrains.kotlinx.dataframe.api.reorderColumnsBy
 import org.jetbrains.kotlinx.dataframe.api.schema
 import org.jetbrains.kotlinx.dataframe.api.toDataFrame
 import org.jetbrains.kotlinx.dataframe.api.toList
@@ -14,10 +15,12 @@ import org.jetbrains.kotlinx.dataframe.io.readCsv
 import org.jetbrains.kotlinx.dataframe.io.toCsv
 import org.jetbrains.kotlinx.dataframe.io.toCsvStr
 import java.math.BigDecimal
+import kotlin.reflect.KClass
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.typeOf
 
 fun main() {
-    println("Hello World!")
     val dataFrame = DataFrame
         .readCsv(
             inputStream = CsvExampleDataModel::class.java.getResourceAsStream("/sample.csv")!!,
@@ -40,9 +43,22 @@ fun main() {
         CsvExampleDataModel(BigDecimal("11.20"), "4567", ACHType.NEXT_DAY)
     ).toDataFrame()
     val exportedCsv = exportedDf.toCsv()
-    println("old expected csv(Apache Commons Csv): \n$exportedCsv")
+    println("exporting csv(Apache Commons Csv): \n$exportedCsv")
+
+    // see: https://github.com/Kotlin/dataframe/issues/1002
+    // v0.14 introduce this issue, fixed in v0.16
+    val constructorOrder: List<String> =
+        (CsvExampleDataModel::class as KClass<*>)
+            .declaredMemberProperties
+            .map { it.findAnnotation<ColumnName>()?.name ?: it.name }
+
+    val exportedCsvWithOriginalOrder = exportedDf
+        .reorderColumnsBy { constructorOrder.indexOf(it.name()) }
+        .toCsv()
+    println("exporting csv using column nam orders in constructor: \n$exportedCsvWithOriginalOrder")
+
     val newExportedCsv = exportedDf.toCsvStr()
-    println("new expected csv: \n$newExportedCsv")
+    println("exporting csv( using new toCsvStr()): \n$newExportedCsv")
 }
 
 enum class ACHType(val symbol: String) {
