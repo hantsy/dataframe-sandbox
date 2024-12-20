@@ -46,7 +46,7 @@ fun main() {
     println("exporting csv(Apache Commons Csv): \n$exportedCsv")
 
     // see: https://github.com/Kotlin/dataframe/issues/1002
-    // v0.14 introduce this issue, fixed in v0.16
+    // there is an issue introduced in v0.14 which reordered the columns by name, it will be fixed in v0.16
     val constructorOrder: List<String> =
         (CsvExampleDataModel::class as KClass<*>)
             .declaredMemberProperties
