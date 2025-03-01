@@ -7,7 +7,7 @@ kotlinDataFrame = "0.15.0"
 kotest = "5.9.1"
 mockk = "1.13.17"
 springmockk = "4.0.2"
-jackson = "2.18.2"
+jackson = "2.18.3"
 logback = "1.5.17"
 
 [libraries]
