@@ -2,7 +2,7 @@
 testLogger = "4.0.0"
 kspGradlePlugin = "2.1.20-1.0.32"
 kotlin = "2.1.20"
-kotlinCoroutines = "1.10.1"
+kotlinCoroutines = "1.10.2"
 kotlinDataFrame = "0.15.0"
 kotest = "5.9.1"
 mockk = "1.13.17"
