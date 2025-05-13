@@ -1,6 +1,6 @@
 [versions]
 testLogger = "4.0.0"
-kspGradlePlugin = "2.1.20-2.0.0"
+kspGradlePlugin = "2.1.21-2.0.1"
 kotlin = "2.1.20"
 kotlinCoroutines = "1.10.2"
 kotlinDataFrame = "0.15.0"
