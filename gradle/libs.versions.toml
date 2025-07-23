@@ -24,7 +24,7 @@ kotlinCoroutinesReactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-r
 # Kotlin Dataframe
 kotlinDataframeCore = { module = "org.jetbrains.kotlinx:dataframe-core", version.ref = "kotlinDataFrame" }
 kotlinDataframeExcel = { module = "org.jetbrains.kotlinx:dataframe-excel", version.ref = "kotlinDataFrame" }
-# kotlinDataframeCsv = { module = "org.jetbrains.kotlinx:dataframe-csv", version.ref = "kotlinDataFrame" }
+kotlinDataframeCsv = { module = "org.jetbrains.kotlinx:dataframe-csv", version.ref = "kotlinDataFrame" }
 
 # Kotlin Coroutines Test
 kotlinCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
