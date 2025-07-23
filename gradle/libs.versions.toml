@@ -1,14 +1,14 @@
 [versions]
 testLogger = "4.0.0"
-kspGradlePlugin = "2.1.0-1.0.29"
-kotlin = "2.1.0"
-kotlinCoroutines = "1.9.0"
-kotlinDataFrame = "0.15.0"
+kspGradlePlugin = "2.2.0-2.0.2"
+kotlin = "2.2.0"
+kotlinCoroutines = "1.10.2"
+kotlinDataFrame = "1.0.0-Beta3"
 kotest = "5.9.1"
-mockk = "1.13.13"
+mockk = "1.14.5"
 springmockk = "4.0.2"
-jackson = "2.18.2"
-logback = "1.5.13"
+jackson = "2.19.2"
+logback = "1.5.18"
 
 [libraries]
 # Kotlin Extensions
@@ -24,7 +24,7 @@ kotlinCoroutinesReactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-r
 # Kotlin Dataframe
 kotlinDataframeCore = { module = "org.jetbrains.kotlinx:dataframe-core", version.ref = "kotlinDataFrame" }
 kotlinDataframeExcel = { module = "org.jetbrains.kotlinx:dataframe-excel", version.ref = "kotlinDataFrame" }
-kotlinDataframeCsv = { module = "org.jetbrains.kotlinx:dataframe-csv", version.ref = "kotlinDataFrame" }
+# kotlinDataframeCsv = { module = "org.jetbrains.kotlinx:dataframe-csv", version.ref = "kotlinDataFrame" }
 
 # Kotlin Coroutines Test
 kotlinCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
