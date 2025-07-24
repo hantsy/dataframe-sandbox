@@ -42,7 +42,7 @@ fun main() {
         CsvExampleDataModel(BigDecimal("10.2"), "1234", ACHType.SAME_DAY),
         CsvExampleDataModel(BigDecimal("11.20"), "4567", ACHType.NEXT_DAY)
     ).toDataFrame()
-    val exportedCsv = exportedDf.toCsv()
+    val exportedCsv = exportedDf.toCsvStr()
     println("exporting csv(Apache Commons Csv): \n$exportedCsv")
 
     // see: https://github.com/Kotlin/dataframe/issues/1002
@@ -54,7 +54,7 @@ fun main() {
 
     val exportedCsvWithOriginalOrder = exportedDf
         .reorderColumnsBy { constructorOrder.indexOf(it.name()) }
-        .toCsv()
+        .toCsvStr()
     println("exporting csv using column nam orders in constructor: \n$exportedCsvWithOriginalOrder")
 
     val newExportedCsv = exportedDf.toCsvStr()
