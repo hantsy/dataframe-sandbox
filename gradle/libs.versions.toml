@@ -1,7 +1,6 @@
 [versions]
 testLogger = "4.0.0"
-kspGradlePlugin = "2.2.20-2.0.3"
-kotlin = "2.2.20"
+kotlin = "2.3.0-Beta1-7"
 kotlinCoroutines = "1.10.2"
 kotlinDataFrame = "1.0.0-Beta3"
 kotest = "6.0.3"
@@ -47,6 +46,5 @@ mockk = ["mockk", "springmockk"]
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlinPluginDataframe = { id = "org.jetbrains.kotlin.plugin.dataframe", version.ref = "kotlin" }
 testLogger = { id = "com.adarshr.test-logger", version.ref = "testLogger" }
-dataframe = { id = "org.jetbrains.kotlinx.dataframe", version.ref = "kotlinDataFrame" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "kspGradlePlugin" }
