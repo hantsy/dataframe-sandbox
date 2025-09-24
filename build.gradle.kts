@@ -3,8 +3,7 @@ import com.adarshr.gradle.testlogger.theme.ThemeType.MOCHA
 plugins {
     alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.testLogger)
-    alias(libs.plugins.dataframe)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlinPluginDataframe)
 }
 
 group = "org.example"
