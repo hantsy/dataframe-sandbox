@@ -5,7 +5,7 @@ kotlinCoroutines = "1.10.2"
 kotlinDataFrame = "1.0.0-Beta3"
 kotest = "6.0.3"
 mockk = "1.14.6"
-springmockk = "4.0.2"
+springmockk = "5.0.1"
 jackson = "2.20.0"
 logback = "1.5.19"
 
