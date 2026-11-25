@@ -1,9 +1,18 @@
 import com.adarshr.gradle.testlogger.theme.ThemeType.MOCHA
+import org.jetbrains.kotlin.gradle.dsl.JvmDefaultMode
+import org.jmailen.gradle.kotlinter.tasks.FormatTask
+import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 plugins {
+    alias(libs.plugins.springBoot)
+    alias(libs.plugins.dependencyManagement)
     alias(libs.plugins.kotlinJvm)
-    alias(libs.plugins.testLogger)
+    alias(libs.plugins.kotlinPluginSpring)
+    // The DataFrame compiler plugin ships with Kotlin itself and replaces the former
+    // KSP based "org.jetbrains.kotlinx.dataframe" Gradle plugin.
     alias(libs.plugins.kotlinPluginDataframe)
+    alias(libs.plugins.kotlinter)
+    alias(libs.plugins.testLogger)
 }
 
 group = "org.example"
@@ -14,66 +23,75 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.bundles.kotlinSupport)
-    implementation(libs.logback)
-    testImplementation(kotlin("test"))
-    testImplementation(libs.bundles.kotest)
-    testImplementation(libs.mockk)
-}
+    // Spring Boot, without any web layer
+    implementation(libs.bundles.spring)
 
-tasks.test {
-    useJUnitPlatform()
+    implementation(libs.bundles.kotlinSupport)
+
+    // Kotlin DataFrame
+    implementation(libs.bundles.dataframe)
+
+    // Test libs
+    testImplementation(libs.bundles.springtest)
+    testImplementation(libs.bundles.kotest)
+    testImplementation(libs.bundles.kotlintest)
+    testRuntimeOnly(libs.junitPlatformLauncher)
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(libs.versions.java.get().toInt())
+    compilerOptions {
+        jvmDefault = JvmDefaultMode.NO_COMPATIBILITY
+        progressiveMode.set(true)
+        freeCompilerArgs.addAll(
+            "-Xjsr305=strict",
+        )
+        optIn.addAll(
+            "kotlin.RequiresOptIn",
+            "kotlinx.coroutines.ExperimentalCoroutinesApi",
+        )
+    }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+    minHeapSize = "128m"
+    maxHeapSize = "2048m"
+}
+
+tasks.withType<LintTask> {
+    exclude { it.file.path.contains("build/generated") }
+}
+
+tasks.withType<FormatTask> {
+    exclude { it.file.path.contains("build/generated") }
+}
+
+tasks.named<Jar>("jar") {
+    // disable plain jar alongside the executable jar
+    enabled = false
+}
+
+kotlinter {
+    ignoreLintFailures = false
+    reporters = arrayOf("checkstyle", "plain")
 }
 
 testlogger {
-    // pick a theme - mocha, standard, plain, mocha-parallel, standard-parallel or plain-parallel
     theme = MOCHA
-
-    // set to false to disable detailed failure logs
     showExceptions = true
-
-    // set to false to hide stack traces
     showStackTraces = true
-
-    // set to true to remove any filtering applied to stack traces
     showFullStackTraces = false
-
-    // set to false to hide exception causes
     showCauses = true
-
-    // set threshold in milliseconds to highlight slow tests
     slowThreshold = 2000
-
-    // displays a breakdown of passes, failures and skips along with total duration
     showSummary = true
-
-    // set to true to see simple class names
-    showSimpleNames = false
-
-    // set to false to hide passed tests
     showPassed = true
-
-    // set to false to hide skipped tests
     showSkipped = true
-
-    // set to false to hide failed tests
     showFailed = true
-
-    // enable to see standard out and error streams inline with the test results
     showStandardStreams = false
-
-    // set to false to hide passed standard out and error streams
-    showPassedStandardStreams = true
-
-    // set to false to hide skipped standard out and error streams
-    showSkippedStandardStreams = true
-
-    // set to false to hide failed standard out and error streams
-    showFailedStandardStreams = true
-
     logLevel = LogLevel.LIFECYCLE
+}
+
+springBoot {
+    buildInfo()
 }

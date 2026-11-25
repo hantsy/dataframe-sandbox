@@ -1,50 +1,56 @@
 [versions]
+java = "25"
+springboot = "4.2.0"
+springDependencyManagement = "1.1.7"
+kotlin = "2.4.10"
+kotlinCoroutines = "1.11.0"
+kotlinDataFrame = "1.0.0-rc02"
+kotlinter = "5.7.0"
 testLogger = "4.0.0"
-kotlin = "2.3.0"
-kotlinCoroutines = "1.10.2"
-kotlinDataFrame = "1.0.0-Beta4"
-kotest = "6.0.7"
-mockk = "1.14.7"
+kotest = "6.2.7"
+mockk = "1.14.12"
 springmockk = "5.0.1"
-jackson = "2.20.1"
-logback = "1.5.24"
+junit = "6.1.3"
 
 [libraries]
-# Kotlin Extensions
-jacksonKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+# Spring Boot (headless: no web layer)
+starter = { module = "org.springframework.boot:spring-boot-starter" }
+starterJackson = { module = "org.springframework.boot:spring-boot-starter-jackson" }
+starterTest = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+# Kotlin extensions
+jacksonKotlin = { module = "tools.jackson.module:jackson-module-kotlin" }
 kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 kotlinStdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib" }
 kotlinCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
-kotlinCoroutinesCoreJvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "kotlinCoroutines" }
-kotlinCoroutinesJdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinCoroutines" }
-kotlinCoroutinesReactive = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive", version.ref = "kotlinCoroutines" }
-kotlinCoroutinesReactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "kotlinCoroutines" }
 
-# Kotlin Dataframe
+# Kotlin DataFrame
 kotlinDataframeCore = { module = "org.jetbrains.kotlinx:dataframe-core", version.ref = "kotlinDataFrame" }
 kotlinDataframeExcel = { module = "org.jetbrains.kotlinx:dataframe-excel", version.ref = "kotlinDataFrame" }
 kotlinDataframeCsv = { module = "org.jetbrains.kotlinx:dataframe-csv", version.ref = "kotlinDataFrame" }
 
-# Kotlin Coroutines Test
+# Test dependencies
+kotlinTestJunit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
 kotlinCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
-
-# Kotest Assertions
 kotestAssertionsCoreJvm = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
-
-# Mockk
 mockk = { module = "io.mockk:mockk-jvm", version.ref = "mockk" }
 springmockk = { module = "com.ninja-squad:springmockk", version.ref = "springmockk" }
+junitPlatformLauncher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
 
-#logback
-logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 [bundles]
-kotlinSupport = ["jacksonKotlin", "kotlinReflect", "kotlinStdlib", "kotlinCoroutinesCore",
-    "kotlinCoroutinesCoreJvm", "kotlinCoroutinesJdk8", "kotlinCoroutinesReactive", "kotlinCoroutinesReactor",
-    "kotlinDataframeCore", "kotlinDataframeExcel", "kotlinDataframeCsv"]
+spring = ["starter", "starterJackson"]
+springtest = ["starterTest"]
+kotlinSupport = ["jacksonKotlin", "kotlinReflect", "kotlinStdlib", "kotlinCoroutinesCore"]
+dataframe = ["kotlinDataframeCore", "kotlinDataframeExcel", "kotlinDataframeCsv"]
 kotest = ["kotestAssertionsCoreJvm"]
 mockk = ["mockk", "springmockk"]
+kotlintest = ["kotlinTestJunit5"]
 
 [plugins]
+springBoot = { id = "org.springframework.boot", version.ref = "springboot" }
+dependencyManagement = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlinPluginSpring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 kotlinPluginDataframe = { id = "org.jetbrains.kotlin.plugin.dataframe", version.ref = "kotlin" }
 testLogger = { id = "com.adarshr.test-logger", version.ref = "testLogger" }
+kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
